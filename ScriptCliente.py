@@ -1,14 +1,25 @@
-import socket
+from socket import *
+import sys
 
-ip = '10.100.217.16'
-port = 6666
-BUF_SIZE = 1024
-mensajePrueba = "Prueba"
+IPServidor = "localhost"
+puertoServidor = 9899
 
-k = socket.socket(socket.AF_INET, socket.SOCK_STREAM,0)
+#se decaran e inicializaran los valores del socket del cliente
+socketCliente = socket(AF_INET, SOCK_STREAM)
+socketCliente.connect((IPServidor,puertoServidor))
 
-k.connect((ip,port))
+while True:
+    #escribimos el mensaje
+    mensaje = input()
+    if mensaje != 'adios' :
 
-k.send(mensajePrueba.encode('utf-8'))
-data = k.recv(BUF_SIZE)
-k.close
+        #enviamos mensaje
+        socketCliente.send(mensaje.encode())
+        #recibimos el mensaje
+        respuesta = socketCliente.recv(4096).decode()
+        print(respuesta)
+    else:
+        socketCliente.send(mensaje.encode())
+        #cerramos socket
+        socketCliente.close()
+        sys.exit()

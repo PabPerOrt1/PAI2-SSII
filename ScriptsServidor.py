@@ -1,19 +1,29 @@
-from asyncio.windows_utils import BUFSIZE
-import socket
+from socket import *
 
-ip='10.100.217.16'
-port= 60
-BUF_SIZE=30
-k = socket.socket(socket.AF_INET, socket.SOCK_STREAM,0)
-k.bind((ip,port))
-k.listen(1)
+direccionServidor = "localhost"
+puertoServidor = 9899
 
-con,addr = k.accept()
-print("Conecction addres is: " + addr)
+#Generamos un nuevo socket
+socketServidor = socket(AF_INET, SOCK_STREAM)
+#Establecemos la conexión
+socketServidor.bind( (direccionServidor,puertoServidor) )
+socketServidor.listen()
+
 while True:
-    data = con.recv(BUF_SIZE)
-    if not data:
-        break
-print("Received data",data)
-con.send(data)
-con.close()
+    #Establecemos la conexión
+    socketConexion, addr = socketServidor.accept()
+    print("Conectando con un cliente", addr)
+    while True:
+        #recibimos el mensaje del cliente
+        mensajeRecibido = socketConexion.recv(4096).decode()
+        print(mensajeRecibido)
+
+        #esta condicion no se cumplira hasta que la cadena sea adios
+        if mensajeRecibido == 'adios':
+            break
+        #mandamos mensaje al cliente
+        socketConexion.send(input().encode())
+
+    print("Desconectado el cliente", addr)
+    #cerramos conexion
+    socketConexion.close()
