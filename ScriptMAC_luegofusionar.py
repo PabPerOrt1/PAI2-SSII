@@ -5,7 +5,8 @@ cantidad = input("Teclee la cantidad: " )
 cuenta_origen = input("Indique la cuenta origen: ")
 cuenta_dest = input("Indique la cuenta destino: ")
 
-datos_mensaje= cuenta_origen+" "+ cuenta_dest+" "+str(cantidad)
+datos_mensaje= cuenta_origen+" "+ cuenta_dest+" "+str(cantidad) 
+
 print(datos_mensaje)
 with open("Config.config") as configfile:
     linea_key =  configfile.readline().rstrip()
