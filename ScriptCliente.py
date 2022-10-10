@@ -33,7 +33,7 @@ def crear_mensaje(nonceClient):
         mensaje_hasheado+= "Hash mal escrito"
     
     nonceClient+=1
-    return datos_mensaje + mensaje_hasheado
+    return datos_mensaje +" " +mensaje_hasheado
 
 #se decaran e inicializaran los valores del socket del cliente
 socketCliente = socket(AF_INET, SOCK_STREAM)

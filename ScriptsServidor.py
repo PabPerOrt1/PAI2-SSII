@@ -2,7 +2,8 @@ from socket import *
 import hmac
 
 #Serv siempre conectao o no
-#Separar nonce
+#Hacer bien nonce
+#log
 
 direccionServidor = "localhost"
 puertoServidor = 9899
@@ -22,10 +23,10 @@ def comprobarEnServidor(mensaje_recibido,nonceServ):
     datos_mensaje = string_separado[0]+" "+ string_separado[1]+ " " +string_separado[2]+" " + str(nonceServ)
     mac_En_Servidor = hmac.new(byte_key,datos_mensaje.encode('utf-8'), hash).hexdigest()
     nonceServ +=1
-    if string_separado[3] == mac_En_Servidor:
-        resultado = "Bien hecho"
+    if string_separado[4] == mac_En_Servidor:
+        resultado = "\nComprobación correcta"
     else:
-        resultado = "Mal"
+        resultado = "\nComprobación incorrecta"
     return resultado
 
 #Generamos un nuevo socket
@@ -40,10 +41,9 @@ socketConexion, addr = socketServidor.accept()
 print("Conectando con un cliente", addr)
 #recibimos el mensaje del cliente
 mensajeRecibido = socketConexion.recv(4096).decode()
-print(mensajeRecibido)
 comprobacion=comprobarEnServidor(mensajeRecibido,nonceServ)
-socketConexion.send("Se ha recibido el mensaje, se va a realizar la comprobación".encode())
-socketConexion.send(comprobacion.encode())
+socketConexion.send(("Se ha recibido el mensaje, se va a realizar la comprobación \n" + comprobacion).encode())
+#socketConexion.send(comprobacion.encode())
 
 print("Desconectado el cliente", addr)
 #aqui hacer el log
