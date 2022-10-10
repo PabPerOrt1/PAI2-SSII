@@ -1,4 +1,5 @@
 from socket import *
+import secrets
 from hashlib import sha224,sha256,sha384,sha512
 import sys , hmac
 
@@ -13,14 +14,14 @@ hash = linea_hash.replace("hash_elegido=","")
 
 byte_key = bytes(key, 'UTF-8')
 
-nonceClient = 1
+
 
 #Se recojen los datos del mensaje y se le aplica algoritmo HMAC
-def crear_mensaje(nonceClient):
-    
+def crear_mensaje():
+    nonceClient = secrets.randbelow(9999)
     cuenta_origen = input("Indique la cuenta origen: ")
     cuenta_dest = input("Indique la cuenta destino: ")
-    cantidad = input("Teclee la cantidad: " )
+    cantidad = input("Teclee la cantidad: ")
     
 
     datos_mensaje= cuenta_origen+" "+ cuenta_dest+" "+str(cantidad)+" "+ str(nonceClient)
@@ -32,15 +33,15 @@ def crear_mensaje(nonceClient):
     else:
         mensaje_hasheado+= "Hash mal escrito"
     
-    nonceClient+=1
-    return datos_mensaje +" " +mensaje_hasheado
+    return datos_mensaje +" " +mensaje_hasheado 
 
 #se decaran e inicializaran los valores del socket del cliente
 socketCliente = socket(AF_INET, SOCK_STREAM)
 socketCliente.connect((IPServidor,puertoServidor))
-
 #escribimos el mensaje
-mensaje = crear_mensaje(nonceClient)
+mensaje = crear_mensaje()
+#aqui meter la inyeccion, hacer otra funcion de mensaje
+
 #enviamos mensaje
 socketCliente.send(mensaje.encode())
 #recibimos el mensaje
@@ -48,19 +49,3 @@ respuesta = socketCliente.recv(4096).decode()
 print(respuesta)
 socketCliente.close()
 sys.exit()
-
-# while True:
-#     #escribimos el mensaje
-#     mensaje = crear_mensaje()
-#     if mensaje != 'adios' :
-
-#         #enviamos mensaje
-#         socketCliente.send(mensaje.encode())
-#         #recibimos el mensaje
-#         respuesta = socketCliente.recv(4096).decode()
-#         print(respuesta)
-#     else:
-#         socketCliente.send(mensaje.encode())
-#         #cerramos socket
-#         socketCliente.close()
-#         sys.exit()
