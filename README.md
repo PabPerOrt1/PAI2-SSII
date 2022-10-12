@@ -1,1 +1,2 @@
 # PAI2-SSII
+# Hay un Script simulando ser el cliente, un script simulando ser el servidor, se puede ejecutar de forma interactiva o por inyección de datos predefinidos para probar los posibles ataques que serán recogidos en el log.txt. También se recogerá los nonce utilizados en un archivo de texto plano.
