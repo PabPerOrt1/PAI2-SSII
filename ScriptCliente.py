@@ -34,17 +34,11 @@ def crear_mensaje():
     
     return datos_mensaje +" " +mensaje_hasheado 
 
-def mensajes_automaticos():
-    nonceClient = secrets.randbelow(9999)
-    directorio_listado = os.listdir("./Ficheros_de_Prueba")
-    for archivo in directorio_listado:
-        with open('./Ficheros_de_Prueba/' + archivo,'r') as f:
-            cuenta_origen = f.readline().rstrip()
-            cuenta_dest = f.readline().rstrip()
-            cantidad = f.readline().rstrip()
 
-    datos_mensaje= cuenta_origen+" "+ cuenta_dest+" "+str(cantidad)+" "+ str(nonceClient)
-    print(datos_mensaje)
+
+def mensajes_automaticos(cuenta_origen,cuenta_dest,cantidad,nonceClient):
+    
+    datos_mensaje= str(cuenta_origen)+" "+ str(cuenta_dest)+" "+str(cantidad)+" "+ str(nonceClient)
     
     mensaje_hasheado =""
     if hash == 'sha224' or hash == 'sha256' or hash == 'sha384' or hash == 'sha512' :
@@ -52,7 +46,9 @@ def mensajes_automaticos():
     else:
         mensaje_hasheado+= "Hash mal escrito"
     
-    return datos_mensaje +" " +mensaje_hasheado 
+    return datos_mensaje+" "+mensaje_hasheado 
+
+directorio_listado = os.listdir("./Ficheros_de_Prueba")
 
 
 # #se decaran e inicializaran los valores del socket del cliente
@@ -71,23 +67,29 @@ def mensajes_automaticos():
 # sys.exit()
 
 #se decaran e inicializaran los valores del socket del cliente
-socketCliente = socket(AF_INET, SOCK_STREAM)
-socketCliente.connect((IPServidor,puertoServidor))
 
+
+
+#escribimos el mensaje
 i=0
-while i <= 1001:    
+for archivo in directorio_listado:
+    socketCliente = socket(AF_INET, SOCK_STREAM)
+    socketCliente.connect((IPServidor,puertoServidor))
+    with open('./Ficheros_de_Prueba/'+"Prueba"+str(i)+".txt",'r') as f:
+        origen = f.readline().rstrip()
+        dest = f.readline().rstrip()
+        cant = f.readline().rstrip()
+        nonceClient = f.readline().rstrip()
+    mensaje = mensajes_automaticos(origen,dest,cant,nonceClient)
+    print("Prueba"+str(i)+" "+mensaje)
     i+=1
-    #escribimos el mensaje
-    mensaje = mensajes_automaticos()
-    print(mensaje)
-    #aqui meter la inyeccion, hacer otra funcion de mensaje
-
     #enviamos mensaje
+    time.sleep(15)
     socketCliente.send(mensaje.encode())
     #recibimos el mensaje
-    #respuesta = socketCliente.recv(4096).decode()
-    #print(respuesta)
-    time.sleep(10)
+    respuesta = socketCliente.recv(4096).decode()
+    print(respuesta)
+#time.sleep(10)
 
 socketCliente.close()
 sys.exit()
