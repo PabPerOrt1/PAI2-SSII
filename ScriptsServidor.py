@@ -3,7 +3,6 @@ import hmac
 
 direccionServidor = "localhost"
 puertoServidor = 9899
-nonceServ=1
 
 with open("Config.config") as configfile:
         linea_key =  configfile.readline().rstrip()
@@ -34,25 +33,29 @@ socketServidor.listen()
 #Establecemos la conexión
 socketConexion, addr = socketServidor.accept()
 print("Conectando con un cliente", addr)
-#recibimos el mensaje del cliente
-mensajeRecibido = socketConexion.recv(4096).decode()
-comprobacion=comprobarEnServidor(mensajeRecibido)
-socketConexion.send(("Se ha recibido el mensaje, se va a realizar la comprobación \n" + comprobacion[0]).encode())
-#Guardar Nonce y Log
-if comprobacion[0] == "\nComprobación incorrecta":
-    with open('nonce_utilizados.txt','r') as noncefile:
-        var = noncefile.readlines()
-        if comprobacion[1] in var:
-            with open('log.txt','a+') as logfile:
-                logfile.write("Hubo un error por reply attack, el nonce " + comprobacion[1] + " está repetido")
-        else:
-            with open('log.txt','a+') as logfile:
-                logfile.write("Hubo un error por man-in-the-middle")
-else:
-    with open('nonce_utilizados.txt','a+') as f:
-        f.write("\n"+comprobacion[1])
 
-print("Desconectado el cliente", addr)
+i=0
+while i <= 1001:
+    i+=1
+    #recibimos el mensaje del cliente
+    mensajeRecibido = socketConexion.recv(4096).decode()
+    comprobacion=comprobarEnServidor(mensajeRecibido)
+    ##socketConexion.send(("Se ha recibido el mensaje, se va a realizar la comprobación \n" + comprobacion[0]).encode())
+    #Guardar Nonce y Log
+    if comprobacion[0] == "\nComprobación incorrecta":
+        with open('nonce_utilizados.txt','r') as noncefile:
+            var = noncefile.readlines()
+            if comprobacion[1] in var:
+                with open('log.txt','a+') as logfile:
+                    logfile.write("Hubo un error por reply attack, el nonce " + comprobacion[1] + " está repetido")
+            else:
+                with open('log.txt','a+') as logfile:
+                    logfile.write("Hubo un error por man-in-the-middle")
+    else:
+        with open('nonce_utilizados.txt','a+') as f:
+            f.write("\n"+comprobacion[1])
 
-#cerramos conexion
-socketConexion.close()
+    print("Desconectado el cliente", addr)
+
+    #cerramos conexion
+    socketConexion.close()
