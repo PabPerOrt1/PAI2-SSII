@@ -1,5 +1,4 @@
-import os
-import random
+import os, random, secrets
 
 def main():
     i = 0
@@ -8,7 +7,8 @@ def main():
         file.write(str(random.randrange(50000, 70000, 4)))
         file.write("\n" + str(random.randrange(50000, 70000, 4))) 
         file.write("\n" + str(random.randrange(1,9999,1)))
+        file.write("\n" + str(secrets.randbelow(9999)))
         file.close()
-        i = i+1
+        i +=1
 if __name__ == '__main__':
     main()
