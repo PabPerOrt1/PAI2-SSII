@@ -50,7 +50,7 @@ if comprobacion[0] == "\nComprobación incorrecta":
                 logfile.write("Hubo un error por man-in-the-middle")
 else:
     with open('nonce_utilizados.txt','a+') as f:
-        f.write(comprobacion[1])
+        f.write("\n"+comprobacion[1])
 
 print("Desconectado el cliente", addr)
 
