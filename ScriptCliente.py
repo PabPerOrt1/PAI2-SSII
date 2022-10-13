@@ -1,5 +1,4 @@
 from socket import *
-import secrets
 from hashlib import sha224,sha256,sha384,sha512
 import sys , hmac, time, os
 
@@ -15,6 +14,9 @@ hash = linea_hash.replace("hash_elegido=","")
 byte_key = bytes(key, 'UTF-8')
 
 
+#
+#       PARA EL FUNCIONAMIENTO NORMAL
+#
 
 #Se recojen los datos del mensaje y se le aplica algoritmo HMAC
 # def crear_mensaje():
@@ -33,6 +35,23 @@ byte_key = bytes(key, 'UTF-8')
 #         mensaje_hasheado+= "Hash mal escrito"
     
 #     return datos_mensaje +" " +mensaje_hasheado 
+
+
+# #se decaran e inicializaran los valores del socket del cliente
+# socketCliente = socket(AF_INET, SOCK_STREAM)
+# socketCliente.connect((IPServidor,puertoServidor))
+# #escribimos el mensaje
+# mensaje = crear_mensaje()
+# #aqui meter la inyeccion, hacer otra funcion de mensaje
+
+# #enviamos mensaje
+# socketCliente.send(mensaje.encode())
+# #recibimos el mensaje
+# respuesta = socketCliente.recv(4096).decode()
+# print(respuesta)
+# socketCliente.close()
+# sys.exit()
+
 
 def lee_mensaje():
     with open('./Ficheros_de_Prueba/'+"Prueba"+str(i)+".txt",'r') as f:
@@ -61,26 +80,11 @@ def fusion_mensajes(mensaje, cifrado):
 directorio_listado = os.listdir("./Ficheros_de_Prueba")
 
 
-# #se decaran e inicializaran los valores del socket del cliente
-# socketCliente = socket(AF_INET, SOCK_STREAM)
-# socketCliente.connect((IPServidor,puertoServidor))
-# #escribimos el mensaje
-# mensaje = crear_mensaje()
-# #aqui meter la inyeccion, hacer otra funcion de mensaje
-
-# #enviamos mensaje
-# socketCliente.send(mensaje.encode())
-# #recibimos el mensaje
-# respuesta = socketCliente.recv(4096).decode()
-# print(respuesta)
-# socketCliente.close()
-# sys.exit()
+#
+#       PARA PROBAR EL FUNCIONAMIENTO
+#
 
 
-
-
-
-#escribimos el mensaje
 i=0
 for archivo in directorio_listado:
     #se decaran e inicializaran los valores del socket del cliente
