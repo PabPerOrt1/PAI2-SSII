@@ -1,1 +1,4 @@
-
+Hubo un error por reply attack, el nonce 681 esta repetido
+Hubo un error por reply attack, el nonce 681 esta repetido
+Hubo un error por man-in-the-middle
+Hubo un error por man-in-the-middle

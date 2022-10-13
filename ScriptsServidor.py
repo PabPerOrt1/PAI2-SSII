@@ -48,13 +48,13 @@ for archivo in directorio_listado:
         with open('nonce_utilizados.txt','r') as noncefile:
             var = noncefile.readlines()
             if (comprobacion[1]+'\n') in var:
-                with open('log.txt','a+') as logfile:
+                with open('log.txt','a') as logfile:
                     logfile.write("Hubo un error por reply attack, el nonce " + comprobacion[1] + " esta repetido\n")
             else:
-                with open('log.txt','a+') as logfile:
+                with open('log.txt','a') as logfile:
                     logfile.write("Hubo un error por man-in-the-middle\n")
     else:
-        with open('nonce_utilizados.txt','a+') as f:
+        with open('nonce_utilizados.txt','a') as f:
             f.write(comprobacion[1]+'\n')
 
 #cerramos conexion
