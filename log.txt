@@ -1,4 +1,21 @@
 Hubo un error por reply attack, el nonce 681 esta repetido
-Hubo un error por reply attack, el nonce 681 esta repetido
+Hubo un error por man-in-the-middle
+Hubo un error por man-in-the-middle
+Hubo un error por man-in-the-middle
+Hubo un error por reply attack, el nonce 7878 esta repetido
+Hubo un error por reply attack, el nonce 2700 esta repetido
+Hubo un error por reply attack, el nonce 2700 esta repetido
+Hubo un error por man-in-the-middle
+Hubo un error por reply attack, el nonce 547 esta repetido
+Hubo un error por reply attack, el nonce 547 esta repetido
+Hubo un error por reply attack, el nonce 547 esta repetido
+Hubo un error por reply attack, el nonce 547 esta repetido
+Hubo un error por reply attack, el nonce 547 esta repetido
+Hubo un error por reply attack, el nonce 547 esta repetido
+Hubo un error por reply attack, el nonce 547 esta repetido
+Hubo un error por reply attack, el nonce 4393 esta repetido
+Hubo un error por reply attack, el nonce 4393 esta repetido
+Hubo un error por reply attack, el nonce 4393 esta repetido
+Hubo un error por man-in-the-middle
 Hubo un error por man-in-the-middle
 Hubo un error por man-in-the-middle
